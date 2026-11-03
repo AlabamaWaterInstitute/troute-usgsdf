@@ -7,7 +7,7 @@ timeslice NetCDF files for t-route to read back in.
 
 The output is a feather file: one row per identifier (flowpath waterbody ID
 from a hydrofabric geopackage, or NWM link ID from a RouteLink file), one column
-per timestep on the simulation's time grid, values in m3/s (`float32`).
+per timestep on the simulation's time grid, values in m3/s.
 
 > **Status:** this repo only builds the dataframe. 
 > To use it, add the path to the USGS dataframe to `troute.yaml` under `compute_parameters.data_assimilation_parameters.streamflow_da.da_from_feather: ./path/to/usgs_df.feather`.
@@ -40,12 +40,12 @@ uvx troute-usgsdf \
   --output /path/to/troute_da.feather
 ```
 
-Or use a RouteLink `.nc` file (e.g. for NHD domains where no geopackage exists), with an optional link mask file:
+Or use a RouteLink `.nc` file, with an optional mask file:
 
 ```bash
 uvx troute-usgsdf \
   --route-link /path/to/RouteLink.nc \
-  --mask /path/to/link_mask.txt \
+  --mask /path/to/mask.txt \
   --troute-config /path/to/troute.yaml \
   --output /path/to/troute_da.feather
 ```
@@ -65,7 +65,7 @@ uvx troute-usgsdf \
   --output /path/to/troute_da.feather
 ```
 
-`--start` and `--end` accept ISO-8601 or `"YYYY-MM-DD HH:MM"` strings. `--nts` specifies the number of timesteps, and `--dt` defaults to 300 seconds.
+`--start` and `--end` accept `"YYYY-MM-DD HH:MM"` strings. `--nts` specifies the number of timesteps, and `--dt` defaults to 300 seconds.
 
 ### Observation Truncation (`--observed-steps`)
 
@@ -82,7 +82,7 @@ Pass `--observed-steps 0` to preserve observations across the full simulation wi
 | `--route-link PATH` | RouteLink `.nc` file containing NWM link IDs and USGS gages. |
 | `--mask PATH` | Optional text file containing link IDs to filter the domain. |
 | `--troute-config PATH` | Path to t-route `troute.yaml` config (alternative to `--start`). |
-| `--start TEXT` | Simulation start time (`YYYY-MM-DD HH:MM` or ISO format). |
+| `--start TEXT` | Simulation start time (`YYYY-MM-DD HH:MM` format). |
 | `--end TEXT` | Simulation end time (paired with `--start`). |
 | `--nts INTEGER` | Number of timesteps (paired with `--start` and `--dt`). |
 | `--dt INTEGER` | Routing/forcing timestep in seconds (default: `300`). |
